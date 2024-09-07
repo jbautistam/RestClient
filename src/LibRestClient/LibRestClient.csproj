@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	  <TargetFramework>net8.0</TargetFramework>
+	  <ImplicitUsings>enable</ImplicitUsings>
+	  <Nullable>enable</Nullable>
+	  <RootNamespace>Bau.Libraries.$(MSBuildProjectName)</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Encoders\**" />
+    <EmbeddedResource Remove="Encoders\**" />
+    <None Remove="Encoders\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Security\Oauth\oAuthAuthenticator.cs" />
+    <Compile Remove="Security\Oauth\UrlEncoder.cs" />
+  </ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Bau.Libraries.LibHelper" Version="1.1.30" />
+		<PackageReference Include="IdentityModel" Version="6.2.0" />
+		<PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="6.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Security\Oauth\" />
+	</ItemGroup>
+</Project>
