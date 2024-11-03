@@ -8,10 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Bau.Libraries.LibMarkup" Version="1.1.1" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Common\LibMarkup\src\LibMarkup.csproj" />
     <ProjectReference Include="..\LibRestClient\LibRestClient.csproj" />
   </ItemGroup>
 

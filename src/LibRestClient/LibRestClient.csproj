@@ -19,13 +19,16 @@
   </ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Bau.Libraries.LibHelper" Version="1.1.30" />
-		<PackageReference Include="IdentityModel" Version="6.2.0" />
+		<PackageReference Include="IdentityModel" Version="7.0.0" />
 		<PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="6.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <Folder Include="Security\Oauth\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\..\..\Common\LibHelper\src\LibHelper.csproj" />
 	</ItemGroup>
 </Project>
