@@ -16,6 +16,8 @@ public class RequestMessage
 		Get,
 		/// <summary>Método PUT</summary>
 		Put,
+		/// <summary>Método PATCH</summary>
+		Patch,
 		/// <summary>Método POST</summary>
 		Post,
 		/// <summary>Método DELETE</summary>
@@ -57,27 +59,36 @@ public class RequestMessage
 		System.Text.StringBuilder builder = new();
 
 			// Asigna los datos principales
-			builder.AppendLine($"{Method.ToString()} {EndPoint}");
-			builder.AppendLine();
-			// Añade las queryString
-			if (QueryStrings is null || QueryStrings.Count == 0)
-				builder.AppendLine("No query string");
-			else
-				foreach (KeyValuePair<string, object> queryString in QueryStrings)
-					builder.AppendLine($"{queryString.Key}: {queryString.Value?.ToString() ?? "Null value"}");
+			builder.AppendLine($"{Method.ToString().ToUpper()} {EndPoint}");
 			builder.AppendLine();
 			// Añade las cabeceras
 			if (Headers is null || Headers.Count == 0)
 				builder.AppendLine("No headers");
 			else
+			{
+				builder.AppendLine("Headers");
 				foreach (KeyValuePair<string, string> header in Headers)
-					builder.AppendLine($"{header.Key}: {header.Value}");
+					builder.AppendLine($"\t{header.Key}: {header.Value}");
+			}
+			builder.AppendLine();
+			// Añade las queryString
+			if (QueryStrings is null || QueryStrings.Count == 0)
+				builder.AppendLine("No query string");
+			else
+			{
+				builder.AppendLine("QueryStrings");
+				foreach (KeyValuePair<string, object> queryString in QueryStrings)
+					builder.AppendLine($"\t{queryString.Key}: {queryString.Value?.ToString() ?? "Null value"}");
+			}
 			builder.AppendLine();
 			// Añade el contenido
 			if (Content is null)
 				builder.AppendLine("No content");
 			else
+			{
+				builder.AppendLine("Content");
 				builder.AppendLine(Content?.ToString() ?? "Null content");
+			}
 			// Devuelve la cadena
 			return builder.ToString();
 	}
