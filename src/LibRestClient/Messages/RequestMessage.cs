@@ -30,8 +30,8 @@ public class RequestMessage
 
 	public RequestMessage(MethodType method, string endPoint, TimeSpan? timeout = null)
 	{
-		EndPoint = endPoint;
 		Method = method;
+		EndPoint = endPoint;
 		Timeout = timeout ?? TimeSpan.FromMinutes(2);
 	}
 
@@ -59,38 +59,40 @@ public class RequestMessage
 		System.Text.StringBuilder builder = new();
 
 			// Asigna los datos principales
-			builder.AppendLine($"{Method.ToString().ToUpper()} {EndPoint}");
-			builder.AppendLine();
+			builder.AppendLine($"{Method.ToString().ToUpper()} {GetUrlCall(EndPoint, QueryStrings)}");
 			// Añade las cabeceras
-			if (Headers is null || Headers.Count == 0)
-				builder.AppendLine("No headers");
-			else
-			{
-				builder.AppendLine("Headers");
-				foreach (KeyValuePair<string, string> header in Headers)
-					builder.AppendLine($"\t{header.Key}: {header.Value}");
-			}
-			builder.AppendLine();
-			// Añade las queryString
-			if (QueryStrings is null || QueryStrings.Count == 0)
-				builder.AppendLine("No query string");
-			else
-			{
-				builder.AppendLine("QueryStrings");
-				foreach (KeyValuePair<string, object> queryString in QueryStrings)
-					builder.AppendLine($"\t{queryString.Key}: {queryString.Value?.ToString() ?? "Null value"}");
-			}
+			if (Headers is not null)
+				foreach (KeyValuePair<string, string?> header in Headers)
+					builder.AppendLine($"{header.Key}: {header.Value}");
 			builder.AppendLine();
 			// Añade el contenido
-			if (Content is null)
-				builder.AppendLine("No content");
-			else
-			{
-				builder.AppendLine("Content");
-				builder.AppendLine(Content?.ToString() ?? "Null content");
-			}
+			if (Content is not null)
+				builder.AppendLine(Content?.ToString());
 			// Devuelve la cadena
 			return builder.ToString();
+	}
+
+	/// <summary>
+	///		Obtiene la URL de la llamada con sus query strings
+	/// </summary>
+	private string GetUrlCall(string endPoint, Dictionary<string, object> queryStrings)
+	{
+		string result = endPoint;
+		bool first = true;
+
+			// Añade las queryString
+			foreach (KeyValuePair<string, object> queryString in queryStrings)
+			{
+				// Añade el separador
+				if (first)
+					result += "?";
+				else
+					result += "&";
+				// Añade el query string
+				result += $"{queryString.Key}: {queryString.Value?.ToString()}";
+			}
+			// Devuelve la cadena
+			return result;
 	}
 
 	/// <summary>
@@ -106,7 +108,7 @@ public class RequestMessage
 	/// <summary>
 	///		Cabeceras del mensaje
 	/// </summary>
-	public Dictionary<string, string> Headers { get; } = new(StringComparer.CurrentCultureIgnoreCase);
+	public Dictionary<string, string?> Headers { get; } = new(StringComparer.CurrentCultureIgnoreCase);
 
 	/// <summary>
 	///		Cadenas añadidas al queryString

@@ -15,8 +15,7 @@ public class ResponseMessage
 		System.Text.StringBuilder builder = new();
 
 			// Asigna los datos principales
-			builder.AppendLine($"Status code: {StatusCode.ToString()}");
-			builder.AppendLine($"Reason: {ReasonPhrase ?? "NULL"}");
+			builder.AppendLine($"Status code: {StatusCode.ToString()} - Reason: {ReasonPhrase ?? "NULL"}");
 			builder.AppendLine();
 			// Añade las cabeceras
 			foreach (KeyValuePair<string, string> header in Headers)
